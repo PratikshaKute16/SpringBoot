@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -48,10 +48,17 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        .success-message {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
     </style>
 </head>
 <body>
 <h1>Department Information</h1>
+
 <div class="content">
     <form action="/departments/save" method="POST">
         <label for="departmentName">Department Name</label>
