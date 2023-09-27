@@ -22,34 +22,42 @@ public class DepartmentController
     @GetMapping("/form")
     public String index(Model model) {
         model.addAttribute("department", new Department());
-        return "departments/form";
+        return "index";
     }
     //saving department
     @PostMapping("/save")
     public String save(@ModelAttribute Department department) {
         service.saveDepartment(department);
-        return "redirect:/departments/list";
+        return "redirect:/departments/form";
     }
 
 
-    @GetMapping("/list")
-    public String departmentList(Model model) {
-        List<Department> departments = service.fetchDepartment();
-        model.addAttribute("departments", departments);
-        return "department-list"; // Create an HTML template for the list
-    }
-    //fetching department by getById
-//    @GetMapping("/{id}")
-//    public Department getById(@PathVariable("id") Long departmentId) throws DepartmentNotFoundException {
-//        return service.getDepartmentById(departmentId);
+//    @GetMapping("/list")
+//    public String departmentList(Model model) {
+//        List<Department> departments = service.fetchDepartment();
+//        model.addAttribute("departments", departments);
+//        return "department-list"; // Create an HTML template for the list
 //    }
+
+    //fetching department by getById
+    @GetMapping("/{id}")
+    public String getById(@PathVariable("id") Long departmentId, Model model) throws DepartmentNotFoundException
+    {
+        try {
+        Department department = service.getDepartmentById(departmentId);
+        model.addAttribute("department", department);
+        return "department-details";
+    } catch (DepartmentNotFoundException e) {
+            return "department-not-found";
+    }
+    }
 
     //Deleting department by id
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long departmentId)
+    public String delete(@PathVariable("id") Long departmentId)
     {
         service.deleteById(departmentId);
-        return "redirect:/departments/list";
+        return "record deleted successfully";
     }
 
     //updating record
@@ -65,10 +73,10 @@ public class DepartmentController
 //        return service.updateDepartmet(departmentName);
 //    }
     @PostMapping("/update/{id}")
-    public String updateDepartment(@PathVariable Long id, @ModelAttribute Department department) {
-        // Perform the update operation here
+    public String updateDepartment(@PathVariable("id") Long id, @ModelAttribute Department department) {
+
         Department updatedDepartment = service.updateDepartmet(id, department);
-        // You can add logic to handle the update and return to the list page or show a confirmation
+
         return "redirect:/departments/list"; // Redirect to the list page after updating
     }
 }

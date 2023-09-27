@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <style>
-        body {
+       body {
             text-align: center;
         }
-         .content {
+        .content {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -48,12 +48,13 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
         .success-message {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 10px;
-}
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -72,7 +73,19 @@
 
         <input type="submit" value="Submit">
     </form>
+</div>
+<div class="content">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <a href="/departments/update/{id}">Update</a> |
+                <a href="/departments/{id}">Delete</a>
+            </td>
+        </tr>
 
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
