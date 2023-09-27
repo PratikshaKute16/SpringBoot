@@ -22,44 +22,53 @@ public class DepartmentController
     @GetMapping("/form")
     public String index(Model model) {
         model.addAttribute("department", new Department());
-        return "index";
+        return "departments/form";
     }
     //saving department
     @PostMapping("/save")
     public String save(@ModelAttribute Department department) {
         service.saveDepartment(department);
-        return "redirect:/departments/form";
+        return "redirect:/departments/list";
     }
 
 
     @GetMapping("/list")
-    public List<Department> fetch() {
-        return service.fetchDepartment();
+    public String departmentList(Model model) {
+        List<Department> departments = service.fetchDepartment();
+        model.addAttribute("departments", departments);
+        return "department-list"; // Create an HTML template for the list
     }
     //fetching department by getById
-    @GetMapping("/{id}")
-    public Department getById(@PathVariable("id") Long departmentId) throws DepartmentNotFoundException {
-        return service.getDepartmentById(departmentId);
-    }
+//    @GetMapping("/{id}")
+//    public Department getById(@PathVariable("id") Long departmentId) throws DepartmentNotFoundException {
+//        return service.getDepartmentById(departmentId);
+//    }
 
     //Deleting department by id
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long departmentId)
+    public String delete(@PathVariable Long departmentId)
     {
         service.deleteById(departmentId);
-        return "record deleted successfully";
+        return "redirect:/departments/list";
     }
 
     //updating record
-    @PutMapping("/{id}")
-    public Department update(@PathVariable("id") Long departmentId,@RequestBody Department department)
-    {
-        return service.updateDepartmet(departmentId,department);
-    }
-    //updating record by name
-    @GetMapping("/name/{name}")
-    public Department updateName(@PathVariable("name") String departmentName)
-    {
-        return service.updateDepartmet(departmentName);
+//    @PutMapping("/{id}")
+//    public Department update(@PathVariable Long departmentId,@RequestBody Department department)
+//    {
+//        return service.updateDepartmet(departmentId,department);
+//    }
+//    //updating record by name
+//    @GetMapping("/name/{name}")
+//    public Department updateName(@PathVariable("name") String departmentName)
+//    {
+//        return service.updateDepartmet(departmentName);
+//    }
+    @PostMapping("/update/{id}")
+    public String updateDepartment(@PathVariable Long id, @ModelAttribute Department department) {
+        // Perform the update operation here
+        Department updatedDepartment = service.updateDepartmet(id, department);
+        // You can add logic to handle the update and return to the list page or show a confirmation
+        return "redirect:/departments/list"; // Redirect to the list page after updating
     }
 }
