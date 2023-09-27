@@ -19,16 +19,16 @@ public class DepartmentController
     @Autowired
     private DepartmentService service;
 
-    @GetMapping("/")
-    public String index() {
+    @GetMapping("/form")
+    public String index(Model model) {
+        model.addAttribute("department", new Department());
         return "index";
     }
     //saving department
     @PostMapping("/save")
-    public String save(@ModelAttribute Department department, Model model) {
-        Department savedDepartment = service.saveDepartment(department);
-        model.addAttribute("department", savedDepartment);
-        return "welcome"; // Assuming you have a "welcome.html" view for displaying the saved department details.
+    public String save(@ModelAttribute Department department) {
+        service.saveDepartment(department);
+        return "redirect:/departments/form";
     }
 
 
