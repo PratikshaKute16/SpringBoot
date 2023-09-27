@@ -6,52 +6,58 @@ import com.Springboot.springbootdemo.service.DepartmentService;
 import com.Springboot.springbootdemo.service.DepartmentServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
+@RequestMapping("/departments")
 public class DepartmentController
 {
     @Autowired
     private DepartmentService service;
 
-     //saving department
-    @PostMapping("/Department")
-    public Department save(@Valid @RequestBody Department department)
-    {
-        return service.saveDepartment(department);
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
+    //saving department
+    @PostMapping("/save")
+    public String save(@ModelAttribute Department department, Model model) {
+        Department savedDepartment = service.saveDepartment(department);
+        model.addAttribute("department", savedDepartment);
+        return "welcome"; // Assuming you have a "welcome.html" view for displaying the saved department details.
     }
 
-    //fetching department rom db
-   @GetMapping("/Department")
-    public List<Department> fetch()
-    {
+
+    @GetMapping("/list")
+    public List<Department> fetch() {
         return service.fetchDepartment();
     }
-
     //fetching department by getById
-    @GetMapping("/Department/{id}")
+    @GetMapping("/{id}")
     public Department getById(@PathVariable("id") Long departmentId) throws DepartmentNotFoundException {
         return service.getDepartmentById(departmentId);
     }
 
     //Deleting department by id
-    @DeleteMapping("/Department/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Long departmentId)
     {
         service.deleteById(departmentId);
-        return "recoerd deleted successfully";
+        return "record deleted successfully";
     }
 
     //updating record
-    @PutMapping("/Department/{id}")
+    @PutMapping("/{id}")
     public Department update(@PathVariable("id") Long departmentId,@RequestBody Department department)
     {
         return service.updateDepartmet(departmentId,department);
     }
     //updating record by name
-    @GetMapping("/Department/name/{name}")
+    @GetMapping("/name/{name}")
     public Department updateName(@PathVariable("name") String departmentName)
     {
         return service.updateDepartmet(departmentName);
