@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+      <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+      <html xmlns:th="http://www.thymeleaf.org">
+      <head>
+      <meta charset="UTF-8">
+      <title>Home</title>
+  <style>
+       body {
+            text-align: center;
+        }
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        form {
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .success-message {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Department Information</h1>
+
+<div class="content">
+<!--  <td><a th:href="@{'/departments/' + ${department.departmentId}}">Edit</a></td>-->
+  <form action="@{'/departments/edit/' + department.departmentId}" method="POST">
+    <label for="departmentId">Department Id</label>
+    <input type="text" id="departmentId" name="departmentId" th:value="${department.departmentId}">
+
+    <label for="departmentName">Department Name</label>
+    <input type="text" id="departmentName" name="departmentName" th:value="${department.departmentName}" required>
+
+    <label for="departmentAddress">Department Address</label>
+    <input type="text" id="departmentAddress" name="departmentAddress" th:value="${department.departmentAddress}" required>
+
+    <label for="departmentCode">Department Code</label>
+    <input type="text" id="departmentCode" name="departmentCode" th:value="${department.departmentCode}" required>
+
+    <input type="submit" value="Submit"><br>
+  </form>
+
+
+</div>
+
+</body>
+</html>
